@@ -1,4 +1,4 @@
-abstract class Utils {
+abstract class MathUtils {
   static int add(int a, int b) {
     return a + b;
   }

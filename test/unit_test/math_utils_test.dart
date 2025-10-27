@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:unit_test_example/utils.dart';
+import 'package:unit_test_example/math_utils.dart';
 
 void main() {
   test('Add function should return 2 when adding 1 and 1', () {
@@ -8,7 +8,7 @@ void main() {
     final b = 1;
 
     // Act
-    final result = Utils.add(a, b);
+    final result = MathUtils.add(a, b);
 
     // Assert
     expect(result, 2);
