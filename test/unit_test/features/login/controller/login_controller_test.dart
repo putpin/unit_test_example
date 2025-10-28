@@ -1,39 +1,78 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:unit_test_example/core/app_navigator.dart';
 import 'package:unit_test_example/data_source/local_storage/shared_preferences.dart';
 import 'package:unit_test_example/features/login/controller/login_controller.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
+class MockAppNavigator extends Mock implements AppNavigator {}
+
 void main() {
   late MockSharedPreferences mockSharedPreferences;
+  late AppNavigator mockAppNavigator;
   late LoginController loginController;
 
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
-    loginController = LoginController(mockSharedPreferences);
+    mockAppNavigator = MockAppNavigator();
+    loginController = LoginController(mockSharedPreferences, mockAppNavigator);
   });
 
   tearDown(() {
     loginController.close();
   });
 
-  test('LoginController login should return true for correct credentials', () {
-    // Arrange
-    const username = 'cuongpv';
-    const password = '123456';
+  group('login', () {
+    test('LoginController login should return true for correct credentials',
+        () {
+      // Arrange
+      const username = 'cuongpv';
+      const password = '123456';
 
-    when(() => mockSharedPreferences.getString(SharedPreferences.usernameKey))
-        .thenReturn(username);
-    when(() => mockSharedPreferences.getString(SharedPreferences.passwordKey))
-        .thenReturn(password);
+      when(() => mockSharedPreferences.getString(SharedPreferences.usernameKey))
+          .thenReturn(username);
+      when(() => mockSharedPreferences.getString(SharedPreferences.passwordKey))
+          .thenReturn(password);
 
-    // Act
-    final result = loginController.login(username, password);
+      // Act
+      final result = loginController.login(username, password);
 
-    // Assert
-    expect(result, isTrue);
+      // Assert
+      expect(result, isTrue);
+    });
+  });
+
+  group('login2', () {
+    test('navigate to home on successful login2', () {
+      // Arrange
+      const username = 'cuongpv';
+      const password = '123456';
+
+      when(() => mockSharedPreferences.getString(SharedPreferences.usernameKey))
+          .thenReturn(username);
+      when(() => mockSharedPreferences.getString(SharedPreferences.passwordKey))
+          .thenReturn(password);
+      // Act
+      loginController.login2(username, password);
+      // Assert
+      verify(() => mockAppNavigator.toNamed('/home')).called(1);
+    });
+
+    test('show snackbar on failed login2', () {
+      // Arrange
+      const username = 'cuongpv';
+      const password = 'wrong_password';
+      when(() => mockSharedPreferences.getString(SharedPreferences.usernameKey))
+          .thenReturn(username);
+      when(() => mockSharedPreferences.getString(SharedPreferences.passwordKey))
+          .thenReturn('123456');
+      // Act
+      loginController.login2(username, password);
+      // Assert
+      verify(() => mockAppNavigator.showSnackbar('Login failed')).called(1);
+    });
   });
 
   group('logout', () {
