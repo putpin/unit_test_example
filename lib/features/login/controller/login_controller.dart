@@ -1,15 +1,15 @@
 import 'package:unit_test_example/data_source/local_storage/shared_preferences.dart';
 
 class LoginController {
-  final SharedPreferences sharedPreferences;
+  final SharedPreferences _sharedPreferences;
 
-  const LoginController(this.sharedPreferences);
+  const LoginController(this._sharedPreferences);
 
   bool login(String username, String password) {
     final storedUsername =
-        sharedPreferences.getString(SharedPreferences.usernameKey);
+        _sharedPreferences.getString(SharedPreferences.usernameKey);
     final storedPassword =
-        sharedPreferences.getString(SharedPreferences.passwordKey);
+        _sharedPreferences.getString(SharedPreferences.passwordKey);
     return password == storedPassword && username == storedUsername;
   }
 }
