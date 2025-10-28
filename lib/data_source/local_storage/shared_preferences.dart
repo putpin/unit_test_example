@@ -9,4 +9,8 @@ class SharedPreferences {
   String? getString(String key) {
     return null;
   }
+
+  Future<bool> clear() async {
+    return true;
+  }
 }
