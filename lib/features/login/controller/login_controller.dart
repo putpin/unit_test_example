@@ -28,4 +28,8 @@ class LoginController {
 
     return success;
   }
+
+  void close() {
+    // Close resources if needed
+  }
 }

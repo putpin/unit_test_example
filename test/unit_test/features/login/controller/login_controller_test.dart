@@ -7,9 +7,20 @@ import 'package:unit_test_example/features/login/controller/login_controller.dar
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
 void main() {
+  late MockSharedPreferences mockSharedPreferences;
+  late LoginController loginController;
+
+  setUp(() {
+    mockSharedPreferences = MockSharedPreferences();
+    loginController = LoginController(mockSharedPreferences);
+  });
+
+  tearDown(() {
+    loginController.close();
+  });
+
   test('LoginController login should return true for correct credentials', () {
     // Arrange
-    final mockSharedPreferences = MockSharedPreferences();
     const username = 'cuongpv';
     const password = '123456';
 
@@ -17,8 +28,6 @@ void main() {
         .thenReturn(username);
     when(() => mockSharedPreferences.getString(SharedPreferences.passwordKey))
         .thenReturn(password);
-
-    final loginController = LoginController(mockSharedPreferences);
 
     // Act
     final result = loginController.login(username, password);
@@ -30,10 +39,6 @@ void main() {
   group('logout', () {
     test('logout should return true when the clear method returns true',
         () async {
-      // Arrange
-      final mockSharedPreferences = MockSharedPreferences();
-      final loginController = LoginController(mockSharedPreferences);
-
       // Stubbing
       when(() => mockSharedPreferences.clear())
           .thenAnswer((_) => Future.value(true));
@@ -47,10 +52,6 @@ void main() {
 
     test('logout should throw an exception when the clear method returns false',
         () async {
-      // Arrange
-      final mockSharedPreferences = MockSharedPreferences();
-      final loginController = LoginController(mockSharedPreferences);
-
       // Stubbing
       when(() => mockSharedPreferences.clear())
           .thenAnswer((_) => Future.value(false));
@@ -65,10 +66,6 @@ void main() {
     test(
         'logout should throw an exception when the clear method throws an exception',
         () async {
-      // Arrange
-      final mockSharedPreferences = MockSharedPreferences();
-      final loginController = LoginController(mockSharedPreferences);
-
       // Stubbing
       when(() => mockSharedPreferences.clear())
           .thenThrow(Exception('Logout failed'));
