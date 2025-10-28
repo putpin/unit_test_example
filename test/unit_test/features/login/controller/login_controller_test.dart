@@ -14,6 +14,10 @@ void main() {
   late AppNavigator mockAppNavigator;
   late LoginController loginController;
 
+  setUpAll(() {
+    registerFallbackValue(Screen('home'));
+  });
+
   setUp(() {
     mockSharedPreferences = MockSharedPreferences();
     mockAppNavigator = MockAppNavigator();
@@ -58,6 +62,7 @@ void main() {
       loginController.login2(username, password);
       // Assert
       verify(() => mockAppNavigator.toNamed('/home')).called(1);
+      // verify(() => mockAppNavigator.toNamed(any())).called(1);
     });
 
     test('show snackbar on failed login2', () {
@@ -74,6 +79,8 @@ void main() {
       verify(() => mockAppNavigator.showSnackbar('Login failed')).called(1);
     });
   });
+
+  group('login2', () {});
 
   group('logout', () {
     test('logout should return true when the clear method returns true',
@@ -119,5 +126,13 @@ void main() {
             .having((e) => e.message, 'error message', 'Logout failed')),
       );
     });
+  });
+
+  test('Goto home screen', () {
+    // Act
+    loginController.gotoHomeScreen();
+
+    // Assert
+    verify(() => mockAppNavigator.toScreen(any())).called(1);
   });
 }

@@ -33,6 +33,10 @@ class LoginController {
     }
   }
 
+  void gotoHomeScreen() {
+    _appNavigator.toScreen(Screen('home'));
+  }
+
   Future<bool> logout() async {
     bool success = false;
     try {
