@@ -1,10 +1,12 @@
 class SharedPreferences {
+  static const usernameKey = 'username';
+  static const passwordKey = 'password';
+
   void setString(String key, String value) {
-    // Implementation here
+    return;
   }
 
   String? getString(String key) {
-    // Implementation here
     return null;
   }
 }

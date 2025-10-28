@@ -6,8 +6,10 @@ class LoginController {
   const LoginController(this.sharedPreferences);
 
   bool login(String username, String password) {
-    final storedUsername = sharedPreferences.getString(username);
-    final storedPassword = sharedPreferences.getString(username);
+    final storedUsername =
+        sharedPreferences.getString(SharedPreferences.usernameKey);
+    final storedPassword =
+        sharedPreferences.getString(SharedPreferences.passwordKey);
     return password == storedPassword && username == storedUsername;
   }
 }
