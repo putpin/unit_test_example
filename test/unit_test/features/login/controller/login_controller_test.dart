@@ -7,6 +7,21 @@ import 'package:unit_test_example/features/login/controller/login_controller.dar
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
+class FakeSharedPreferences extends Fake implements SharedPreferences {
+  @override
+  String? getString(String key) {
+    return 'pvc';
+  }
+
+  @override
+  void setString(String key, String value) {}
+
+  @override
+  Future<bool> clear() async {
+    return true;
+  }
+}
+
 class MockAppNavigator extends Mock implements AppNavigator {}
 
 void main() {
