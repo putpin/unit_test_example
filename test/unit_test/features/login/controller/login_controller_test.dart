@@ -7,6 +7,8 @@ import 'package:unit_test_example/features/login/controller/login_controller.dar
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
+class FakeScreen extends Fake implements Screen {}
+
 class FakeSharedPreferences extends Fake implements SharedPreferences {
   @override
   String? getString(String key) {
@@ -30,7 +32,7 @@ void main() {
   late LoginController loginController;
 
   setUpAll(() {
-    registerFallbackValue(Screen('home'));
+    registerFallbackValue(FakeScreen());
   });
 
   setUp(() {
