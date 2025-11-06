@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:unit_test_example/math_utils.dart';
+import 'package:unit_test_example/utils/math_utils.dart';
 
 void main() {
   test('Add function should return 2 when adding 1 and 1', () {
